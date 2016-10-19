@@ -1,7 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 
-
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   context: path.resolve('js'),
@@ -9,27 +9,36 @@ module.exports = {
   entry: ['./utils', './app', 'bootstrap-loader'],
 
   output: {
-    path: path.resolve('build/js/'),
-    publicPath: '/public/assets/js/',
+    path: path.resolve('build/'),
+    publicPath: '/public/assets/',
     filename: 'bundle.js'
   },
+
+  plugins: [
+    new ExtractTextPlugin('style.css'),
+    new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery"
+    })
+
+  ],
 
   devServer: {
     contentBase: 'public'
   },
 
-  plugins: [
-        new webpack.ProvidePlugin({
-           $: "jquery",
-           jQuery: "jquery"
-       })
-    ],
-
   module: {
     loaders: [
 
-      { test: /\.css$/, exclude: /node_modules/, loaders: ['style', 'css'] },
-      { test: /\.scss$/, loaders: ['style', 'css', 'sass'] },
+      { 
+        test: /\.css$/, 
+        exclude: /node_modules/, 
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+      },
+      { 
+        test: /\.scss$/, 
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
+      },
       { test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, loader: 'imports?jQuery=jquery' },
       { test: /\.(eot|woff|woff2|ttf|svg|png|jpe?g|gif)(\?\S*)?$/, loader: 'url?limit=100000&name=[name].[ext]'},
 
