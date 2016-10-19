@@ -1,6 +1,6 @@
 
 require('../css/app.css');
-// import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+require('../css/news.scss');
 
 import {login} from './login';
 
