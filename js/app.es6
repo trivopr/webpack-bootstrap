@@ -1,9 +1,11 @@
 
+import {bootstrap} from 'bootstrap-sass';
+
+require('../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss');
 require('../css/app.css');
 require('../css/news.scss');
 
 import {login} from './login';
-
 
 var el = document.getElementsByClassName('txthello');
 

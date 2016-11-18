@@ -1,12 +1,11 @@
 var path = require('path');
 var webpack = require('webpack');
-
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   context: path.resolve('js'),
 
-  entry: ['./utils', './app', 'bootstrap-loader'],
+  entry: ['./utils', './app'],
 
   output: {
     path: path.resolve('build/'),
@@ -30,13 +29,13 @@ module.exports = {
   module: {
     loaders: [
 
-      { 
-        test: /\.css$/, 
-        exclude: /node_modules/, 
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
       },
-      { 
-        test: /\.scss$/, 
+      {
+        test: /\.scss$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
       },
       { test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, loader: 'imports?jQuery=jquery' },
@@ -46,9 +45,17 @@ module.exports = {
         test: /\.es6$/,
         exclude: /node_modules/,
         loader: "babel-loader"
+      },
+
+      {
+        test: /\.js$/,
+        include:  __dirname + '/app/js',
+        loader: 'babel?presets[]=es2015'
       }
     ]
   },
+
+  watch: true,
 
   resolve: {
     extensions: ['', '.js', '.es6']
