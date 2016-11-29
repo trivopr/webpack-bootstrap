@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
   context: path.resolve('js'),
@@ -18,7 +19,8 @@ module.exports = {
     new webpack.ProvidePlugin({
         $: "jquery",
         jQuery: "jquery"
-    })
+    }),
+    new OpenBrowserPlugin
 
   ],
 
