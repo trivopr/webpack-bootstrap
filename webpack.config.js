@@ -4,9 +4,9 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
-  context: path.resolve('js'),
+  context: path.resolve('app'),
 
-  entry: ['./utils', './app'],
+  entry: ['./index'],
 
   output: {
     path: path.resolve('build/'),
@@ -28,6 +28,8 @@ module.exports = {
     contentBase: 'public'
   },
 
+  devtool: 'eval-source-map',
+
   module: {
     loaders: [
 
@@ -44,14 +46,21 @@ module.exports = {
       { test: /\.(eot|woff|woff2|ttf|svg|png|jpe?g|gif)(\?\S*)?$/, loader: 'url?limit=100000&name=[name].[ext]'},
 
       {
-        test: /\.es6$/,
+        test: /\.(es6|js)$/,
         exclude: /node_modules/,
         loader: "babel-loader"
       },
 
       {
         test: /\.js$/,
-        include:  __dirname + '/app/js',
+        include: __dirname + '/app',
+        loader: 'eslint',
+        exclude: /node_modules/
+      },
+
+      {
+        test: /\.(js|es6)$/,
+        include:  __dirname + '/app',
         loader: 'babel?presets[]=es2015'
       }
     ]
